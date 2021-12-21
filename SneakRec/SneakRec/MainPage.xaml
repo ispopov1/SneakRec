@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SneakRec"
+             mc:Ignorable="d"
+             x:Class="SneakRec.MainPage"
+            BackgroundColor="White">
+    <ContentPage.BindingContext>
+        <local:SneakersViewModel/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Image  Grid.Row="1" Source="{Binding PredictionPhotoPath}"/>
+        <Label  Grid.Row="0" TextColor="Black" FontSize="Large" 
+                HorizontalOptions="Center" VerticalOptions="Center"
+                Text="{Binding NameMessage}" />
+        <Button Grid.Row="2" Text="Show details" 
+                VerticalOptions="Start" HorizontalOptions="Center" 
+                BackgroundColor="LightGray" WidthRequest="140" HeightRequest="50"
+                TextColor="Black" FontSize="Default" Command="{Binding ShowDetailsCommand}"
+                IsEnabled="{Binding CanShowDetails}" IsVisible="{Binding CanShowDetails}"/>
+        <Button Grid.Row="3" Text="Take photo" 
+                VerticalOptions="Center" HorizontalOptions="End" 
+                BackgroundColor="White" WidthRequest="130" HeightRequest="60"
+                TextColor="Black" FontSize="Default" IsEnabled="{Binding CanTakePhoto}"
+                Command="{Binding TakePhotoCommand}"/>
+        <Button Grid.Row="3" Text="Upload from gallery" 
+                VerticalOptions="Center" HorizontalOptions="Start" 
+                BackgroundColor="White" WidthRequest="130" HeightRequest="60"
+                TextColor="Black" FontSize="Default" IsEnabled="{Binding CanTakePhoto}"
+                Command="{Binding UploadPhotoCommand}"/>
+
+        <Grid BackgroundColor="White" Opacity="0.9" IsVisible="{Binding ShowSpinner}"
+              Grid.RowSpan="3"/>
+
+        <StackLayout Grid.RowSpan="3" Orientation="Vertical" Spacing="20"
+                     HorizontalOptions="Center" VerticalOptions="Center"
+                     IsVisible="{Binding ShowSpinner}">
+            <ActivityIndicator Color="Black" 
+                               IsRunning="{Binding ShowSpinner}"/>
+            <Label TextColor="Black" Text="Identifying model..."/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
